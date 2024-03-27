@@ -74,9 +74,9 @@ class DatabaseManager:
                     return existing_user
                 else:
                     cur.execute("INSERT INTO cutePoints (name, points, userid) VALUES (?, ?, ?)",
-                                (user.display_name, 0.0, user.id))
+                                (user.display_name, 0, user.id))
                     conn.commit()
-                    return None, user.display_name, 0.0, user.id
+                    return None, user.display_name, 0, user.id
         except Exception as ex:
             logging.error(f"Error in get_or_create_user: {ex}")
             raise
