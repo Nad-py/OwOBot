@@ -48,7 +48,7 @@ class Cuteness(commands.Cog):
         Command to check the cute points of the invoking user.
         """
         try:
-            user_info = await self.get_or_create_user(interaction.user)
+            user_info = await self.db.get_or_create_user(interaction.user)
             embed = style_manager.create_view_embed(user_info[2], interaction.user)
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -63,11 +63,7 @@ class Cuteness(commands.Cog):
         and displays their rankings and points in descending order.
         """
         try:
-            with self.db.connect() as conn:
-                cur = conn.cursor()
-                cur.execute("SELECT name, points FROM cutePoints ORDER BY points DESC LIMIT 10")
-                leaderboard_data = cur.fetchall()
-
+            leaderboard_data = self.db.get_leaderboard_data()
             embed = style_manager.create_leaderboard_embed(leaderboard_data, interaction.user)
             await interaction.response.send_message(embed=embed, ephemeral=True)
         except Exception as ex:

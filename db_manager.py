@@ -1,6 +1,6 @@
 import discord
 import sqlite3
-from typing import Optional, Type, Any
+from typing import Optional, Type, Any, List, Tuple
 import logging
 
 
@@ -47,6 +47,13 @@ class DatabaseManager:
             ''')
 
             conn.commit()
+
+    def get_leaderboard_data(self) -> List[Tuple[str, int]]:
+        with self.connect() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT name, points FROM cutePoints ORDER BY points DESC LIMIT 10")
+            leaderboard_data = cur.fetchall()
+        return leaderboard_data
 
     async def get_or_create_user(self, user: discord.User) -> tuple:
         """
