@@ -1,0 +1,23 @@
+{
+  "description": "‏‏‎ ‎\n╰┈➤ **{service_name}** \n\n*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°. ࿐•°.\n‏‏‎ ‎",
+  "color": 16753314,
+  "fields": [
+    {
+      "name": "ㅤService Description :",
+      "value": "‏‏‎ ‎\nㅤ{service_description} \n‏‏‎ ‎",
+      "inline": true
+    },
+    {
+      "name": "Requirements :",
+      "value": "‏‏‎ ‎\n{service_requirements}\n‏‏‎ ‎",
+      "inline": true
+    }
+  ],
+  "author": {
+    "name": "Person Offering Service",
+    "icon_url": "https://i.pinimg.com/736x/3a/d9/85/3ad9854472f4c5d9120492604f2f8833.jpg"
+  },
+  "footer": {
+    "text": "*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.*࿐•°.࿐•°.࿐•°.࿐•°.࿐•°.࿐•°."
+  }
+}

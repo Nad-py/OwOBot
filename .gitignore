@@ -1,0 +1,24 @@
+# Ignore virtual environment
+venv/
+
+# Ignore sensitive information in .env
+.env
+
+# Ignore any log files
+*.log
+nohup.out
+
+# Ignore database files
+*.db
+
+# Ignore Python bytecode files
+__pycache__/
+
+# Ignore any generated files
+*.pyc
+
+# Ignore dependencies
+*.egg-info/
+*.egg
+dist/
+build/
