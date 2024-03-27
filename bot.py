@@ -36,8 +36,7 @@ async def setup_cogs() -> None:
 
 
 def check_if_owner(ctx):
-    return ctx.message.author.id == os.environ.get("BOT_OWNER_ID")
-
+    return ctx.message.author.id == int(os.environ.get("BOT_OWNER_ID"))
 
 @bot.command()
 @commands.check(check_if_owner)

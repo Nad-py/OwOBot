@@ -1,5 +1,7 @@
+import discord
 import sqlite3
 from typing import Optional, Type, Any
+import logging
 
 
 class DatabaseManager:
@@ -44,6 +46,40 @@ class DatabaseManager:
                 )
             ''')
 
+            conn.commit()
+
+    async def get_or_create_user(self, user: discord.User) -> tuple:
+        """
+        Retrieve an existing user's data or create a new user if not found.
+
+        Args:
+            user (discord.User): The Discord user.
+
+        Returns:
+            tuple: User information (or None if a new user was created).
+        """
+        try:
+            with self.connect() as conn:
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM cutePoints WHERE userid = ?", (user.id,))
+                existing_user = cur.fetchone()
+                if existing_user:
+                    return existing_user
+                else:
+                    cur.execute("INSERT INTO cutePoints (name, points, userid) VALUES (?, ?, ?)",
+                                (user.display_name, 0.0, user.id))
+                    conn.commit()
+                    return None, user.display_name, 0.0, user.id
+        except Exception as ex:
+            logging.error(f"Error in get_or_create_user: {ex}")
+            raise
+
+    async def give_points(self, user: discord.User, points: int) -> None:
+        user_info = await self.get_or_create_user(user)
+        with self.connect() as conn:
+            cur = conn.cursor()
+            new_points = user_info[2] + points
+            cur.execute("UPDATE cutePoints SET points = ? WHERE userid = ?", (new_points, user.id))
             conn.commit()
 
     def __enter__(self) -> sqlite3.Connection:

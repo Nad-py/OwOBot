@@ -21,32 +21,6 @@ class Cuteness(commands.Cog):
     async def on_ready(self) -> None:
         logging.info("Cuteness cog loaded successfully.")
 
-    async def get_or_create_user(self, user: discord.User) -> tuple:
-        """
-        Retrieve an existing user's data or create a new user if not found.
-
-        Args:
-            user (discord.User): The Discord user.
-
-        Returns:
-            tuple: User information (or None if a new user was created).
-        """
-        try:
-            with self.db.connect() as conn:
-                cur = conn.cursor()
-                cur.execute("SELECT * FROM cutePoints WHERE userid = ?", (user.id,))
-                existing_user = cur.fetchone()
-                if existing_user:
-                    return existing_user
-                else:
-                    cur.execute("INSERT INTO cutePoints (name, points, userid) VALUES (?, ?, ?)",
-                                (user.display_name, 0.0, user.id))
-                    conn.commit()
-                    return None, user.display_name, 0.0, user.id
-        except Exception as ex:
-            logging.error(f"Error in get_or_create_user: {ex}")
-            raise
-
     @app_commands.command(name="cute_give", description="Give cute points to a member (or take em away >:3)")
     @app_commands.checks.has_role(int(os.environ.get("CUTE_ROLE_ID")))
     async def cute_give(self, interaction: discord.Interaction, points: int, user: discord.User) -> None:
@@ -59,15 +33,9 @@ class Cuteness(commands.Cog):
             user (discord.User): The target user.
         """
         try:
-            user_info = await self.get_or_create_user(user)
-
-            with self.db.connect() as conn:
-                cur = conn.cursor()
-                new_points = user_info[2] + points
-                cur.execute("UPDATE cutePoints SET points = ? WHERE userid = ?", (new_points, user.id))
-                conn.commit()
-
+            await self.db.give_points(user, points)
             embed = style_manager.create_give_embed(points, interaction.user)
+
             await interaction.response.send_message(embed=embed, ephemeral=True)
             await self.bot.get_channel(self.log_channel).send(f"{interaction.user} gave {user} {points} point(s)")
         except Exception as ex:
@@ -115,4 +83,4 @@ async def setup(bot: commands.Bot) -> None:
         bot (commands.Bot): The Discord bot.
     """
     # specifying a guild is essential, it doesnt register slash commands otherwise
-    await bot.add_cog(Cuteness(bot), guilds=[discord.Object( id=int(os.environ.get("GUILD_ID")) )])
+    await bot.add_cog(Cuteness(bot), guilds=[discord.Object(id=int(os.environ.get("GUILD_ID")))])
