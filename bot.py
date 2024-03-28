@@ -35,12 +35,22 @@ async def setup_cogs() -> None:
                 logging.error(f"Error loading cog {filename}: {e}")
 
 
-def check_if_owner(ctx):
+def check_if_owner(ctx: commands.Context) -> bool:
+    """
+    Checks whether the user invoking the command is the owner specified in BOT_OWNER_ID.
+
+    Args:
+        ctx (commands.Context): The context object provided by Discord.py.
+
+    Returns:
+        bool: True if the invoking user matches the BOT_OWNER_ID, False otherwise.
+    """
+
     return ctx.message.author.id == int(os.environ.get("BOT_OWNER_ID"))
 
 @bot.command()
 @commands.check(check_if_owner)
-async def sync(ctx: commands.Context):
+async def sync(ctx: commands.Context) -> None:
     """
     Command to synchronize commands within the bot's command tree for the guild from which it was executed.
 
@@ -58,6 +68,11 @@ async def sync(ctx: commands.Context):
 
 
 async def main() -> None:
+    """
+    Main function to set up the database, load cogs, and start the bot.
+
+    This function sets up the database, loads cogs (extensions), and starts the bot using the provided TOKEN.
+    """
     try:
         db.setup_database()
         await setup_cogs()

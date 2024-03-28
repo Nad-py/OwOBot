@@ -10,15 +10,34 @@ import os
 class Cuteness(commands.Cog):
     """
     A Discord Cog for managing cute points.
+
+    This cog provides commands and functionality related to managing points for users within the Discord server.
+    It includes commands for giving and viewing cute points, as well as accessing a leaderboard.
     """
 
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
+        """
+        Initializes an instance of the class.
+
+        Args:
+            bot (commands.Bot): The Discord bot instance.
+
+        Attributes:
+            bot (commands.Bot): The Discord bot instance.
+            db (DatabaseManager): The database manager instance.
+            log_channel (int): The ID of the channel used for logging.
+        """
         self.bot: commands.Bot = bot
         self.db: DatabaseManager = DatabaseManager()
         self.log_channel = int(os.environ.get("CUTE_CHANNEL"))
 
     @commands.Cog.listener()
     async def on_ready(self) -> None:
+        """
+        A listener function that executes when the bot is ready.
+
+        This function logs a message indicating successful loading of the Cuteness cog.
+        """
         logging.info("Cuteness cog loaded successfully.")
 
     @app_commands.command(name="cute_give", description="Give cute points to a member (or take em away >:3)")
@@ -46,9 +65,13 @@ class Cuteness(commands.Cog):
     async def cute_points(self, interaction: discord.Interaction) -> None:
         """
         Command to check the cute points of the invoking user.
+
+        Args:
+            interaction (discord.Interaction): The interaction context.
         """
         try:
             user_info = await self.db.get_or_create_user(interaction.user)
+            # user_info[2] represents the user's points
             embed = style_manager.create_view_embed(user_info[2], interaction.user)
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -61,6 +84,9 @@ class Cuteness(commands.Cog):
         """
         Retrieves the top 10 members with the highest cute points from the database
         and displays their rankings and points in descending order.
+
+        Args:
+            interaction (discord.Interaction): The interaction context.
         """
         try:
             leaderboard_data = self.db.get_leaderboard_data()

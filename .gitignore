@@ -23,3 +23,5 @@ __pycache__/
 dist/
 build/
 
+# Ignore PyCharm files
+.idea/

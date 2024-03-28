@@ -12,7 +12,11 @@ def load_style(style: str) -> dict:
         style (str): The name of the style file.
 
     Returns:
-        dict: The style information.
+        dict: The style information loaded from the JSON file.
+
+    Raises:
+        FileNotFoundError: If the specified style file is not found.
+        Exception: If an error occurs while loading the style file.
     """
     style_path = f"./styles/{style}"
     try:

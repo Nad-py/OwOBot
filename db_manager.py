@@ -6,10 +6,14 @@ import logging
 
 class DatabaseManager:
     """
-    TODO: describe this
+    A class responsible for managing interactions with the SQLite database for cute points.
+
+    This class provides methods for initializing the database, connecting to it, disconnecting from it,
+    setting up the required tables, retrieving leaderboard data, and managing user data such as creating new users
+    and updating their cute points.
     """
 
-    def __init__(self, db_file: str = 'owodb.db'):
+    def __init__(self, db_file: str = 'owodb.db') -> None:
         """
         Initialize the DatabaseManager with the specified database file.
 
@@ -20,10 +24,21 @@ class DatabaseManager:
         self.conn = None
 
     def connect(self) -> sqlite3.Connection:
+        """
+        Establishes a connection to the SQLite database.
+
+        Returns:
+            sqlite3.Connection: The connection object.
+        """
         self.conn = sqlite3.connect(self.db_file)
         return self.conn
 
     def disconnect(self) -> None:
+        """
+        Closes the connection to the SQLite database.
+
+        If the connection is open, it closes the connection and sets it to None.
+        """
         if self.conn:
             self.conn.close()
             self.conn = None  # Set to None after closing to avoid potential issues
@@ -49,6 +64,13 @@ class DatabaseManager:
             conn.commit()
 
     def get_leaderboard_data(self) -> List[Tuple[str, int]]:
+        """
+        Retrieves the top 10 members with the highest cute points from the database.
+
+        Returns:
+            List[Tuple[str, int]]: A list of tuples containing the names and points of the top 10 members,
+                                    sorted by points in descending order.
+        """
         with self.connect() as conn:
             cur = conn.cursor()
             cur.execute("SELECT name, points FROM cutePoints ORDER BY points DESC LIMIT 10")
@@ -63,7 +85,8 @@ class DatabaseManager:
             user (discord.User): The Discord user.
 
         Returns:
-            tuple: User information (or None if a new user was created).
+            tuple: A tuple containing user information (or None if a new user was created).
+                   The tuple structure is (id, name, points, userid).
         """
         try:
             with self.connect() as conn:
@@ -82,6 +105,13 @@ class DatabaseManager:
             raise
 
     async def give_points(self, user: discord.User, points: int) -> None:
+        """
+        Add points to a user's existing cute points.
+
+        Args:
+            user (discord.User): The Discord user.
+            points (int): The number of points to add.
+        """
         user_info = await self.get_or_create_user(user)
         with self.connect() as conn:
             cur = conn.cursor()
