@@ -1,22 +1,16 @@
-# Project Title
+# OwOBot
 
-A short description about the project and/or client.
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+OwOBot is a Discord bot with a primary focus on managing "cute points", with additional features such as "professions" that allow users to post and delete tasks.
 
 ### Prerequisites
 
 The things you need before installing the software.
 
-* You need this
-* And you need this
-* Oh, and don't forget this
+* Python 3.9.16
+* Git
 
 ### Installation
 
-A step by step guide that will tell you how to get the development environment up and running.
 
 Windows:
 ```
@@ -57,34 +51,19 @@ python bot.py
 
 ## Usage
 
-A few examples of useful commands and/or tasks.
+### /cute_give
+![/cute_give](https://github.com/Nad-py/OwOBot/assets/84136430/ef5c7345-9073-4094-a104-37b025ba8b72)
 
-```
-$ First example
-$ Second example
-$ And keep this in mind
-```
+![/cute_give output](https://github.com/Nad-py/OwOBot/assets/84136430/227964ad-0370-4662-96d7-40e671f6630b)
 
-## Deployment
+### /cute_leaderboard
+![/cute_leaderboard](https://github.com/Nad-py/OwOBot/assets/84136430/65d5e436-ad4c-4284-8e99-f40cea8b5612)
 
-Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special).
 
-### Server
+### /cute_points
+![/cute_points](https://github.com/Nad-py/OwOBot/assets/84136430/a01b1b30-baf4-409f-aac7-1b2dc27730fa)
 
-* Live:
-* Release:
-* Development:
+### /profession
+![/profession](https://github.com/Nad-py/OwOBot/assets/84136430/9ec515a9-bf0b-4e3a-8a32-6bc28a55f06c)
 
-### Branches
-
-* Master:
-* Feature:
-* Bugfix:
-* etc...
-
-## Additional Documentation and Acknowledgments
-
-* Project folder on server:
-* Confluence link:
-* Asana board:
-* etc...
+![/profession output](https://github.com/Nad-py/OwOBot/assets/84136430/e740a7c1-489b-4b0e-aebe-2a654dd3a336)
