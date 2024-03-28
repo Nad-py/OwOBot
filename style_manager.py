@@ -141,3 +141,19 @@ def create_profession_embed(name: str, service_description: str, service_require
         service_requirements=service_requirements)
 
     return discord.Embed().from_dict(embed_dict)
+
+
+def create_log_embed(points_given: int, initiator: discord.User, target: discord.User) -> discord.Embed:
+    try:
+        embed_dict = load_style("points_log.json")
+
+        embed_dict['description'] = embed_dict['description'].format(points=points_given,
+                                                                     giver=initiator.display_name,
+                                                                     taker=target.display_name)
+        embed_dict["author"]["name"] = initiator.display_name
+        embed_dict["author"]["icon_url"] = initiator.avatar.url
+
+        return discord.Embed().from_dict(embed_dict)
+
+    except Exception as ex:
+        logging.error(f"Error in create_log_embed: {ex}")

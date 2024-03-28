@@ -54,9 +54,10 @@ class Cuteness(commands.Cog):
         try:
             await self.db.give_points(user, points)
             embed = style_manager.create_give_embed(points, interaction.user)
+            log_embed = style_manager.create_log_embed(points, interaction.user, user)
 
             await interaction.response.send_message(embed=embed, ephemeral=True)
-            await self.bot.get_channel(self.log_channel).send(f"{interaction.user} gave {user} {points} point(s)")
+            await self.bot.get_channel(self.log_channel).send(embed=log_embed)
         except Exception as ex:
             logging.error(f"Error in cute_give: {ex}")
             await style_manager.send_error_embed(interaction, "Failed to give cute points")
