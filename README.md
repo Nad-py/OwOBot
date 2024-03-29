@@ -59,7 +59,6 @@ python bot.py
 ### /cute_leaderboard
 ![/cute_leaderboard](https://github.com/Nad-py/OwOBot/assets/84136430/65d5e436-ad4c-4284-8e99-f40cea8b5612)
 
-
 ### /cute_points
 ![/cute_points](https://github.com/Nad-py/OwOBot/assets/84136430/a01b1b30-baf4-409f-aac7-1b2dc27730fa)
 
@@ -67,3 +66,6 @@ python bot.py
 ![/profession](https://github.com/Nad-py/OwOBot/assets/84136430/9ec515a9-bf0b-4e3a-8a32-6bc28a55f06c)
 
 ![/profession output](https://github.com/Nad-py/OwOBot/assets/84136430/e740a7c1-489b-4b0e-aebe-2a654dd3a336)
+
+### Logging for /cute_give
+![/cute_give logging](https://github.com/Nad-py/OwOBot/assets/84136430/14e6f7f1-76ca-4781-b28c-2a9b15343aa4)
