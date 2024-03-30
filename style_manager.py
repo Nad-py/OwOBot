@@ -130,17 +130,20 @@ def create_profession_embed(name: str, service_description: str, service_require
     Returns:
         discord.Embed: The created embed.
     """
-    embed_dict = load_style("professions.json")
-    service_requirements = service_requirements.replace(",", "\n")
-    embed_dict["author"]["name"] = author.display_name
-    embed_dict["author"]["icon_url"] = author.avatar.url
-    embed_dict["description"] = embed_dict["description"].format(service_name=name)
-    embed_dict["fields"][0]["value"] = embed_dict["fields"][0]["value"].format(
-        service_description=service_description)
-    embed_dict["fields"][1]["value"] = embed_dict["fields"][1]["value"].format(
-        service_requirements=service_requirements)
+    try:
+        embed_dict = load_style("professions.json")
+        service_requirements = service_requirements.replace(",", "\n")
+        embed_dict["author"]["name"] = author.display_name
+        embed_dict["author"]["icon_url"] = author.avatar.url
+        embed_dict["description"] = embed_dict["description"].format(service_name=name)
+        embed_dict["fields"][0]["value"] = embed_dict["fields"][0]["value"].format(
+            service_description=service_description)
+        embed_dict["fields"][1]["value"] = embed_dict["fields"][1]["value"].format(
+            service_requirements=service_requirements)
 
-    return discord.Embed().from_dict(embed_dict)
+        return discord.Embed().from_dict(embed_dict)
+    except Exception as ex:
+        logging.error(f"Error in create_log_embed: {ex}")
 
 
 def create_log_embed(points_given: int, initiator: discord.User, target: discord.User) -> discord.Embed:
@@ -149,7 +152,7 @@ def create_log_embed(points_given: int, initiator: discord.User, target: discord
 
         embed_dict['description'] = embed_dict['description'].format(points=points_given,
                                                                      giver=initiator.display_name,
-                                                                     taker=target.display_name)
+                                                                     taker=target.mention)
         embed_dict["author"]["name"] = initiator.display_name
         embed_dict["author"]["icon_url"] = initiator.avatar.url
 
